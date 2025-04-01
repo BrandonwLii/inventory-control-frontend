@@ -44,7 +44,8 @@
     "scandit-react-native-datacapture-barcode": "^7.1.3",
     "scandit-react-native-datacapture-core": "^7.1.3",
     "scandit-react-native-datacapture-id": "^7.1.3",
-    "scandit-react-native-datacapture-parser": "^7.1.3"
+    "scandit-react-native-datacapture-parser": "^7.1.3",
+    "use-debounce": "^10.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

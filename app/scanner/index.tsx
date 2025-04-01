@@ -1,35 +1,27 @@
 import { Camera, CameraView } from "expo-camera";
 import { Stack } from "expo-router";
 import {
-    AppState,
-    Linking,
+    Text,
     Platform,
     SafeAreaView,
     StatusBar,
     StyleSheet,
 } from "react-native";
 import { Overlay } from "./Overlay";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 export default function Home() {
-    const qrLock = useRef(false);
-    const appState = useRef(AppState.currentState);
+    const [scanData, setscanData] = useState("");
+    const [debouncedData] = useDebounce(scanData, 500);
 
     useEffect(() => {
-        const subscription = AppState.addEventListener("change", (nextAppState) => {
-            if (
-                appState.current.match(/inactive|background/) &&
-                nextAppState === "active"
-            ) {
-                qrLock.current = false;
-            }
-            appState.current = nextAppState;
-        });
+        if (scanData) {
+            fetch("https://3569-138-51-65-176.ngrok-free.app/reports/" + scanData, { method: "POST" });
+            console.log("Read Barcode: " + scanData);
+        }
 
-        return () => {
-            subscription.remove();
-        };
-    }, []);
+    }, [debouncedData])
 
     return (
         <SafeAreaView style={StyleSheet.absoluteFillObject}>
@@ -43,22 +35,12 @@ export default function Home() {
             <CameraView
                 style={StyleSheet.absoluteFillObject}
                 facing="back"
-                onBarcodeScanned={({ data }) => {
-                    if (data) {
-                        fetch('localhost:8000', {
-                            method: 'POST',
-                            headers: {
-                                Accept: 'application/json',
-                            },
-                            body: JSON.stringify({
-                                firstParam: 'yourValue',
-                                secondParam: 'yourOtherValue',
-                            }),
-                        });
-                    }
-                }}
+                onBarcodeScanned={({ data }) => { if (data) setscanData(data); }}
             />
-            <Overlay />
+            <Text>
+                Last Scanned: {debouncedData}
+            </Text>
+
         </SafeAreaView>
     );
 }
