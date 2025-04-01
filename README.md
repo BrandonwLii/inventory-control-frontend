@@ -3,6 +3,11 @@
 ## 📌 Description
 Frontend for an inventory control solution that utilizes a mobile barcode scanning app. Written with React Native and Expo.
 
+## 🚀 Features
+- Debounce to prevent repeat scanning
+- Cross platform support
+- Quick and easy scanning for inventory tracking
+
 ## 🛠️ Installation
 ```sh
 # Clone the repository
@@ -20,6 +25,8 @@ npx expo start
 ```
 
 Make sure to change the ngrok link under app/scanner/index.tsx to correctly reach the backend.
+
+Use Expo Go to connect to your device.
 
 ## 📷 Screenshots
 ![image](https://github.com/user-attachments/assets/817c4bb0-4e2b-471b-b248-3386d530cc2b)
