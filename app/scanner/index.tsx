@@ -1,6 +1,7 @@
 import { Camera, CameraView } from "expo-camera";
 import { Stack } from "expo-router";
 import {
+    View,
     Text,
     Platform,
     SafeAreaView,
@@ -17,7 +18,7 @@ export default function Home() {
 
     useEffect(() => {
         if (scanData) {
-            fetch("https://3569-138-51-65-176.ngrok-free.app/reports/" + scanData, { method: "POST" });
+            fetch("https://ba98-138-51-77-122.ngrok-free.app/reports/" + scanData, { method: "POST" });
             console.log("Read Barcode: " + scanData);
         }
 
@@ -37,7 +38,7 @@ export default function Home() {
                 facing="back"
                 onBarcodeScanned={({ data }) => { if (data) setscanData(data); }}
             />
-            <Text>
+            <Text style={{ fontSize: 20, color: 'red' }}>
                 Last Scanned: {debouncedData}
             </Text>
 
